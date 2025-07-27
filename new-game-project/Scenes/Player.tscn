@@ -1,0 +1,48 @@
+[gd_scene load_steps=10 format=3 uid="uid://b8jaaxvntk854"]
+
+[ext_resource type="Script" uid="uid://iwovh1uaop0y" path="res://Scripts/PlayerController.gd" id="1_rpqav"]
+[ext_resource type="Script" uid="uid://d2p2pfal1absc" path="res://Scripts/State Machine/StateMachine.gd" id="2_52ee3"]
+[ext_resource type="Script" uid="uid://bkvxka5b52x2j" path="res://Scripts/State Machine/States/idle.gd" id="3_bhhdu"]
+[ext_resource type="Script" uid="uid://f5wfeml18gdc" path="res://Scripts/State Machine/States/sprinting.gd" id="4_megsn"]
+[ext_resource type="Script" uid="uid://bmyx5hpgsjede" path="res://Scripts/State Machine/States/jumping.gd" id="5_yoq75"]
+[ext_resource type="Script" uid="uid://dac23j0ogpsh8" path="res://Scripts/State Machine/States/falling.gd" id="6_ksbbd"]
+[ext_resource type="Script" uid="uid://dsa1lc7btgbge" path="res://Scripts/State Machine/States/walking.gd" id="7_glx4g"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0rwas"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qbkls"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_rpqav")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_0rwas")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qbkls")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+unique_name_in_owner = true
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_52ee3")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_bhhdu")
+
+[node name="Sprinting" type="Node" parent="StateMachine"]
+script = ExtResource("4_megsn")
+
+[node name="Jumping" type="Node" parent="StateMachine"]
+script = ExtResource("5_yoq75")
+
+[node name="Falling" type="Node" parent="StateMachine"]
+script = ExtResource("6_ksbbd")
+
+[node name="Walking" type="Node" parent="StateMachine"]
+script = ExtResource("7_glx4g")

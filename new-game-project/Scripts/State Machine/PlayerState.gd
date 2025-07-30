@@ -5,7 +5,10 @@ const WALKING = "Walking"
 const SPRINTING = "Sprinting"
 const JUMPING = "Jumping"
 const FALLING = "Falling"
-#const DASHING = "Dashing"
+const CROUCHING = "Crouching"
+const CROUCH_JUMPING = "Crouch_Jumping"
+const SLIDING = "Sliding"
+const DASHING = "Dashing"
 
 var player: Player
 

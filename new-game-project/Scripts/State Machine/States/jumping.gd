@@ -5,24 +5,20 @@ func enter(previous_state_path: String, data := {}) -> void:
 	#PLAY ANIMS AND SOUNDS
 	
 func physics_update(delta: float) -> void:
-	var input_dir = Input.get_vector("left", "right", "forward", "backward").normalized() #NORMALIZE VECTORS TO 1
-	player.wish_dir = player.global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y) #STORE INPUT DIRECTIONS INTO VEC3
-	
-	air_move(delta)
+	player.air_move(delta)
 	player.move_and_slide()
 	
-	if player.velocity.y <= 0.0:
+	if player.velocity.y < 0.0:
 		finished.emit(FALLING)
-	
-func air_move(delta) -> void:
-	player.velocity.y -= ProjectSettings.get_setting("physics/3d/default_gravity") * delta
-	
-	#CLASSIC MOVEMENT RECIPE (QUAKE)
-	var cur_speed_in_wish_dir = player.velocity.dot(player.wish_dir)
-	var capped_speed = min((player.air_move_speed * player.wish_dir).length(), player.air_cap)
-	var add_speed_until_cap = capped_speed - cur_speed_in_wish_dir
-	
-	if add_speed_until_cap > 0:
-		var accel_speed = player.air_accel * player.air_move_speed * delta
-		accel_speed = min(accel_speed, add_speed_until_cap)
-		player.velocity += accel_speed * player.wish_dir
+	elif player.velocity.y > 0.0 and Input.is_action_pressed("crouch"):
+		finished.emit(CROUCH_JUMPING)
+	elif Input.is_action_just_pressed("dash") and player.dash_limit == 0:
+		finished.emit(DASHING)
+	elif player.slope_detect.is_colliding() and player.velocity.y <= 0.0:
+		if not player.input_dir.is_zero_approx():
+			if Input.is_action_pressed("sprint"):
+				finished.emit(SPRINTING)
+			else:
+				finished.emit(WALKING)
+		elif player.input_dir.is_zero_approx():
+			finished.emit(IDLE)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8jaaxvntk854"]
+[gd_scene load_steps=13 format=3 uid="uid://b8jaaxvntk854"]
 
 [ext_resource type="Script" uid="uid://iwovh1uaop0y" path="res://Scripts/PlayerController.gd" id="1_rpqav"]
 [ext_resource type="Script" uid="uid://d2p2pfal1absc" path="res://Scripts/State Machine/StateMachine.gd" id="2_52ee3"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" uid="uid://dyg6bteslg246" path="res://Scripts/State Machine/States/crouching.gd" id="8_bhhdu"]
 [ext_resource type="Script" uid="uid://80b25duujna4" path="res://Scripts/State Machine/States/crouch_jumping.gd" id="9_megsn"]
 [ext_resource type="Script" uid="uid://t6sftft782go" path="res://Scripts/State Machine/States/sliding.gd" id="10_yoq75"]
-[ext_resource type="Script" uid="uid://cawfa82vd3qsy" path="res://Scripts/State Machine/States/dashing.gd" id="11_ksbbd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_0rwas"]
 
@@ -64,10 +63,3 @@ script = ExtResource("9_megsn")
 
 [node name="Sliding" type="Node" parent="StateMachine"]
 script = ExtResource("10_yoq75")
-
-[node name="Dashing" type="Node" parent="StateMachine"]
-script = ExtResource("11_ksbbd")
-
-[node name="slope_detection" type="RayCast3D" parent="."]
-unique_name_in_owner = true
-target_position = Vector3(0, -0.2, 0)
